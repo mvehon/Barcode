@@ -190,8 +190,6 @@ public class ResultFragment extends Fragment {
 
         //TODO if book, search the Google Books api to use for info, productCodeType(upc).equals(getString(R.string.isbn))
 
-
-
         //Call each of the retailer APIs
         for (int i = 0; i < retailers.size(); i++) {
             if (retailers.get(i).getShowRetailer()) {
@@ -378,8 +376,6 @@ public class ResultFragment extends Fragment {
             itemList.add(response);
             Collections.sort(itemList, new PriceComparator());
             mAdapter.notifyDataSetChanged();
-
-            Log.d("Itemlist", "Item list size: " + Integer.toString(itemList.size()));
 
             //Set the header views with details from first returned product
             if (product_name.getText().equals("")) {
