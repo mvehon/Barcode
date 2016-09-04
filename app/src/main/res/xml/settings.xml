@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Settings">
+        <MultiSelectListPreference
+            android:key="select"
+            android:summary="Choose which retailers you see results from"
+            android:title="Select Retailers" />
+        <ListPreference
+            android:key="history"
+            android:entries="@array/historyValueNames"
+            android:entryValues="@array/historyValues"
+            android:summary="How many past searches to store"
+            android:title="Search History" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

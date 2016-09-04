@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="historyValues">
+        <item>0</item>
+        <item>10</item>
+        <item>25</item>
+        <item>100</item>
+        <item>1000</item>
+    </string-array>
+    <string-array name="historyValueNames">
+        <item>None</item>
+        <item>10</item>
+        <item>25</item>
+        <item>100</item>
+        <item>All</item>
+    </string-array>
+</resources>
