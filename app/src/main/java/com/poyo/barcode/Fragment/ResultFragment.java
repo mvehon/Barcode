@@ -22,14 +22,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.poyo.barcode.Adapter.RetailRecyclerAdapter;
-import com.poyo.barcode.AmazonProductList;
+import com.poyo.barcode.Model.AmazonProductList;
 import com.poyo.barcode.AmazonSignatureHelper;
-import com.poyo.barcode.EbayProduct;
+import com.poyo.barcode.Model.EbayProduct;
 import com.poyo.barcode.MainActivity;
-import com.poyo.barcode.Product;
-import com.poyo.barcode.ProductList;
+import com.poyo.barcode.Model.Product;
+import com.poyo.barcode.Model.ProductList;
 import com.poyo.barcode.R;
-import com.poyo.barcode.Retailer;
+import com.poyo.barcode.Model.Retailer;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -138,6 +138,7 @@ public class ResultFragment extends Fragment {
     //Add the product to the saved list
     private void addSavedProduct() {
         savedItemList.add(0, itemList.get(0));
+
         //Set state to saved
         fab.setImageDrawable(ResourcesCompat.getDrawable(res, R.drawable.saved, null));
         isSaved = true;
@@ -193,19 +194,19 @@ public class ResultFragment extends Fragment {
         //Call each of the retailer APIs
         for (int i = 0; i < retailers.size(); i++) {
             if (retailers.get(i).getShowRetailer()) {
-                callAllRetailerAPI(i, resultupc);
+                callRetailerAPI(i, resultupc);
             }
         }
     }
 
 
     //Contains the logic for all retailer APIs
-    private void callAllRetailerAPI(int i, String upc) {
+    private void callRetailerAPI(int i, String upc) {
         productUpc = upc;
         Retailer retail = retailers.get(i);
         String tag = retail.getName();
-        Log.d(tag, Integer.toString(i));
 
+        //TODO - create a generic Retrofit service that will work for all the following retail services - probably use the TreeMap for params and a call as a QueryMap
         SortedMap<String, String> sortedParamMap = new TreeMap<>();
         switch (tag) {
             case "Walmart":
@@ -220,12 +221,6 @@ public class ResultFragment extends Fragment {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(newSubscribe());
                 break;
-            case "Macy's":
-                MacysService mcs = createRetrofitService(MacysService.class, retail.getEndpoint(), retail.getReturn_type());
-                mcs.getProduct(retail.getApi_key(), upc).subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(newSubscribe());
-                break;
             case "Ebay":
                 EbayService ebs = createRetrofitService(EbayService.class, retail.getEndpoint(), retail.getReturn_type());
                 ebs.getProduct(getString(R.string.findItemsByProduct), retail.getApi_key(), retail.getReturn_type(), productCodeType(upc), upc).subscribeOn(Schedulers.newThread())
@@ -233,7 +228,7 @@ public class ResultFragment extends Fragment {
                         .subscribe(newEbaySubscribe());
                 break;
             case "Amazon":
-                //Add search paramaters for Amazon, must be sorted bitwise to generate signature
+                //Add search paramaters for Amazon, must be sorted bitwise to generate signature for authentication
                 AmazonService ams = createRetrofitService(AmazonService.class, retail.getEndpoint(), retail.getReturn_type());
                 sortedParamMap.put(getString(R.string.AWSAccessKeyId), retail.getApi_key());
                 sortedParamMap.put(getString(R.string.itemid), upc);
@@ -248,17 +243,24 @@ public class ResultFragment extends Fragment {
                 }
 
                 //Create a valid signature for Amazon api call
-                AmazonSignatureHelper ash = new AmazonSignatureHelper(getString(R.string.awsSecretKey));
+                AmazonSignatureHelper ash = new AmazonSignatureHelper(MainActivity.simpleDecode(getString(R.string.awsSecretKey)));
                 ams.getProduct(sortedParamMap, ash.sign(sortedParamMap)).subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(newAmazonSubscribe());
+                break;
+
+            case "Macy's":
+                MacysService mcs = createRetrofitService(MacysService.class, retail.getEndpoint(), retail.getReturn_type());
+                mcs.getProduct(retail.getApi_key(), upc).subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(newSubscribe());
                 break;
         }
 
 
     }
 
-    //Return the type of product code
+    //Return the type of product code (ISBN or UPC)
     private String productCodeType(String upc) {
         String type;
         Log.d("Product code type", Integer.toString(upc.length()));
@@ -361,6 +363,7 @@ public class ResultFragment extends Fragment {
     }
 
     private void createProduct(Product response) {
+        //Print details to log for my sake
         Log.d("Product", "Product Name: " + response.getName());
         Log.d("Product", "Product Image: " + response.getThumbnailImage());
         Log.d("Product", "Product UPC: " + response.getUpc());

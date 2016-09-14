@@ -1,6 +1,7 @@
-package com.poyo.barcode;
+package com.poyo.barcode.Model;
 
 import com.google.gson.annotations.SerializedName;
+import com.poyo.barcode.R;
 
 
 import java.io.Serializable;
@@ -20,6 +21,7 @@ public class Product implements Serializable {
     @SerializedName(value = "salePrice", alternate = {"__value__", "salePrice3"})
     private double mSalePrice;
 
+    //TODO - see if there is a way to factor this in (maybe get user location to estimate shipping cost)
     //@SerializedName(value="standardShipRate", alternate={"shippingCost", "standardShipRate3"})
     private double mStandardShipRate = 0.0;
 
@@ -27,7 +29,7 @@ public class Product implements Serializable {
     private String mUpc;
 
     @SerializedName(value = "addToCartUrl", alternate = {"linkShareAffiliateUrl", "viewItemURL"})
-    //TODO change the first to affiliateAddToCartUrl once I get an affiliate for Walmart
+    //TODO change the first to affiliateAddToCartUrl once I get an affiliate account for Walmart
     private String mSalesLink;
 
     @SerializedName(value = "source", alternate = {"source2", "source3"})

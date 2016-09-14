@@ -13,6 +13,8 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
+import com.poyo.barcode.Model.Retailer;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,6 +25,8 @@ import java.util.Set;
 
 @SuppressWarnings("unchecked")
 public class Settings extends PreferenceActivity {
+
+    //TODO this needs to be improved
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.poyo.barcode.Adapter.ProductRecyclerAdapter;
 import com.poyo.barcode.MainActivity;
-import com.poyo.barcode.Product;
+import com.poyo.barcode.Model.Product;
 import com.poyo.barcode.R;
 
 import java.util.ArrayList;
@@ -50,10 +50,12 @@ public class HistoryFragment extends Fragment {
             }
         });
 
+
+        historyItemList = (ArrayList<Product>) getArguments().get(getString(R.string.historyItemList));
+
         mAdapter = new ProductRecyclerAdapter(getActivity().getApplicationContext(), historyItemList);
         recyclerView.setAdapter(mAdapter);
 
-        historyItemList = (ArrayList<Product>) getArguments().get(getString(R.string.historyItemList));
 
         showHistory();
         return v;
@@ -67,13 +69,17 @@ public class HistoryFragment extends Fragment {
             snackBar.dismiss();
             MainActivity.noResults();
         } else {
+            //Show the snackbar to clear history list
             snackBar.show();
+
+            //Get layout params so that the bottom of the RecyclerView will not be covered by the snackbar
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) recyclerView.getLayoutParams();
             params.setMargins(params.leftMargin, params.topMargin, params.rightMargin, Math.round(48 * Resources.getSystem().getDisplayMetrics().density));
             recyclerView.setLayoutParams(params);
-            mAdapter = new ProductRecyclerAdapter(getActivity().getApplicationContext(), historyItemList);
-            recyclerView.setAdapter(mAdapter);
-            mAdapter.notifyDataSetChanged();
+
+//            mAdapter = new ProductRecyclerAdapter(getActivity().getApplicationContext(), historyItemList);
+//            recyclerView.setAdapter(mAdapter);
+//            mAdapter.notifyDataSetChanged();
         }
     }
 

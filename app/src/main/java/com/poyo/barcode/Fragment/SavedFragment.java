@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.poyo.barcode.Adapter.ProductRecyclerAdapter;
 import com.poyo.barcode.MainActivity;
-import com.poyo.barcode.Product;
+import com.poyo.barcode.Model.Product;
 import com.poyo.barcode.R;
 
 import java.util.ArrayList;

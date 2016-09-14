@@ -1,4 +1,4 @@
-package com.poyo.barcode;
+package com.poyo.barcode.Model;
 
 import java.io.Serializable;
 
@@ -10,7 +10,6 @@ public class Retailer implements Serializable {
     private String api_key;
     private Boolean showRetailer;
     private int img_id;
-    //private String secret_key;
     //private String affiliate;
 
 /*
@@ -37,7 +36,7 @@ public class Retailer implements Serializable {
 */
 
 
-    Retailer(String name, String endpoint, String api_key, String return_type, int img_id) {
+    public Retailer(String name, String endpoint, String api_key, String return_type, int img_id) {
         this.name = name;
         this.endpoint = endpoint;
         this.return_type = return_type;
@@ -66,7 +65,7 @@ public class Retailer implements Serializable {
         return return_type;
     }
 
-    void setShowRetailer(Boolean bool) {
+    public void setShowRetailer(Boolean bool) {
         this.showRetailer = bool;
     }
 

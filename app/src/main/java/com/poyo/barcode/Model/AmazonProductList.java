@@ -1,4 +1,4 @@
-package com.poyo.barcode;
+package com.poyo.barcode.Model;
 
 import android.util.Log;
 
@@ -28,14 +28,7 @@ public class AmazonProductList implements Serializable {
     //Remove the unavailable items
     private void removeInvalidListings() {
         for (int i = 0; i < itemList.size(); i++) {
-            Log.d("i:", String.valueOf(i) + "");
-            Log.d("mName:", itemList.get(i).mName + "");
-            Log.d("formattedprice:", itemList.get(i).formattedprice + "");
-            Log.d("thumbnail:", itemList.get(i).mThumbnailImage + "");
-            Log.d("msaleslink:", itemList.get(i).mSalesLink + "");
-            Log.d("convertedformat:", String.valueOf(itemList.get(i).convertFormattedPrice()) + "");
-
-            //if the price is 0 or there's no image, it's probably not a valid listing
+            //if the price is 0 or there's no image, it's probably not a valid listing, so discard it
             if (itemList.get(i).convertFormattedPrice() <= 0 || itemList.get(i).mThumbnailImage == null) {
                 itemList.remove(i);
                 i--;

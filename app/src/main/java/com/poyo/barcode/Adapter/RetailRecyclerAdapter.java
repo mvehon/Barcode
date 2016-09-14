@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.poyo.barcode.Product;
+import com.poyo.barcode.Model.Product;
 import com.poyo.barcode.R;
 
 import java.text.NumberFormat;

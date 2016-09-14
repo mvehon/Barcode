@@ -21,7 +21,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 
-//Generates valid Amazon signature - code from Amazon
+//Generates valid Amazon signature - code mostly from Amazon
 public class AmazonSignatureHelper {
     private static final String UTF8_CHARSET = "UTF-8";
     private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";

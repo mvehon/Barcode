@@ -1,4 +1,4 @@
-package com.poyo.barcode;
+package com.poyo.barcode.Model;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Path;

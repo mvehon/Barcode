@@ -21,9 +21,9 @@ import android.widget.Toast;
 
 import com.poyo.barcode.Adapter.ProductRecyclerAdapter;
 import com.poyo.barcode.MainActivity;
-import com.poyo.barcode.Product;
+import com.poyo.barcode.Model.Product;
 import com.poyo.barcode.R;
-import com.poyo.barcode.Retailer;
+import com.poyo.barcode.Model.Retailer;
 
 import java.util.ArrayList;
 
